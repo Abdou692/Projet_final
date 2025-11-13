@@ -1,77 +1,67 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard Admin')</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Custom Styles for Admin Layout */
-        body {
-            background-color: #f4f4f4;
-        }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        .admin-sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            height: 100%;
-            background-color: #343a40;
-            color: white;
-            padding-top: 20px;
-        }
+    <title>Admin - @yield('title', 'RecycleChic')</title>
 
-        .admin-sidebar a {
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            display: block;
-        }
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-        .admin-sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .admin-content {
-            margin-left: 250px;
-            padding: 20px;
-        }
-    </style>
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @vite(['resources/css/recycle-chic.css'])
 </head>
-<body>
-    <div class="admin-sidebar">
-        <h4 class="text-center text-white">Admin</h4>
-        <ul class="nav flex-column">
-            
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.categories.index') }}">
-                     <i class="fas fa-list"></i>  Gestion des catégories
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.produits.index') }}">
-                     <i class="fas fa-list"></i>  Gestion des produits
-                </a>
-            </li>
-            <li class="nav-item">
+<body class="admin-body">
+
+    <aside class="admin-sidebar">
+        <div>
+            <a href="{{ route('admin.categories.index') }}" class="admin-brand">RecycleChic</a>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">
+                        Catégories
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.produits.*') ? 'active' : '' }}" href="{{ route('admin.produits.index') }}">
+                        Produits
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="logout-form">
             <form action="{{ route('admin.logout') }}" method="POST">
-    @csrf
-    <button type="submit" class="btn btn-danger">Déconnexion</button>
-</form>
-            </li>
-        </ul>
-    </div>
+                @csrf
+                <button type="submit" class="btn btn-accent w-100">Déconnexion</button>
+            </form>
+        </div>
+    </aside>
 
-    <div class="admin-content">
+    <main class="admin-content">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         @yield('content')
-    </div>
+    </main>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    @yield('scripts') <!-- Important pour charger DataTables correctement -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

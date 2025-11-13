@@ -22,10 +22,8 @@ use App\Http\Controllers\AdminAuthController;
 
 // Route de connexion pour l'admin
 Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::get('admin', [AdminAuthController::class, 'showLoginForm'])->name('login');
-Route::post('admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+Route::post('admin/login', [AdminAuthController::class, 'login']);
 Route::post('admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-
 use App\Http\Controllers\AdminCategorieController;
 use App\Http\Controllers\AdminProduitController;
 

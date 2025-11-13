@@ -1,0 +1,116 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap');
+
+/* Définition des variables de la charte graphique RecycleChic */
+:root {
+    --rc-blue: #2F5DA8;
+    --rc-yellow: #F5C845;
+    --rc-light-bg: #f8f9fa;
+    --rc-dark-text: #333;
+    --rc-white: #ffffff;
+    --rc-border-color: #dee2e6;
+
+    --font-title: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+}
+
+/* Styles globaux */
+body {
+    background-color: var(--rc-light-bg);
+    color: var(--rc-dark-text);
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-title);
+    color: var(--rc-blue);
+}
+
+a {
+    color: var(--rc-blue);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Boutons */
+.btn {
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: var(--rc-blue);
+    color: var(--rc-white);
+}
+
+.btn-primary:hover {
+    background-color: #254a8a;
+}
+
+.btn-accent {
+    background-color: var(--rc-yellow);
+    color: var(--rc-dark-text);
+}
+
+.btn-accent:hover {
+    background-color: #e0b43e;
+}
+
+/* Cartes de produit */
+.product-card {
+    background-color: var(--rc-white);
+    border: 1px solid var(--rc-border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.product-card .product-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Image carrée */
+    object-fit: cover;
+}
+
+.product-card .card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.product-card .product-category {
+    font-size: 0.8rem;
+    color: #777;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .product-title {
+    font-family: var(--font-title);
+    font-size: 1.2rem;
+    color: var(--rc-blue);
+    margin-bottom: 0.5rem;
+}
+
+.product-card .product-price {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--rc-blue);
+    margin-top: auto;
+    margin-bottom: 1rem;
+}

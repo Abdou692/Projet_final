@@ -1,0 +1,277 @@
+/* =================================================================
+   CHARTE GRAPHIQUE RECYCLECHIC
+================================================================= */
+:root {
+    --rc-primary: #2F5DA8; /* Bleu principal */
+    --rc-accent: #F5C845;  /* Jaune accent */
+    --rc-dark: #2c3e50;    /* Texte sombre */
+    --rc-light: #f8f9fa;   /* Fond clair */
+    --rc-white: #ffffff;   /* Blanc */
+    --rc-border-color: #dee2e6;
+    --rc-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --rc-font-title: 'Playfair Display', serif;
+    --rc-font-text: 'Montserrat', sans-serif;
+}
+
+/* =================================================================
+   STYLES GLOBAUX
+================================================================= */
+body {
+    background-color: var(--rc-light);
+    color: var(--rc-dark);
+    font-family: var(--rc-font-text);
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand, .card-title {
+    font-family: var(--rc-font-title);
+    color: var(--rc-primary);
+}
+
+.btn-primary {
+    background-color: var(--rc-primary);
+    border-color: var(--rc-primary);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #254a85;
+    border-color: #254a85;
+}
+
+.btn-accent {
+    background-color: var(--rc-accent);
+    border-color: var(--rc-accent);
+    color: var(--rc-dark);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+    background-color: #e0b63e;
+    border-color: #e0b63e;
+    color: var(--rc-dark);
+}
+
+.btn-outline-primary {
+    color: var(--rc-primary);
+    border-color: var(--rc-primary);
+}
+
+.btn-outline-primary:hover {
+    color: var(--rc-white);
+    background-color: var(--rc-primary);
+    border-color: var(--rc-primary);
+}
+
+/* =================================================================
+   LAYOUT PUBLIC (app.blade.php)
+================================================================= */
+.navbar-recycle-chic {
+    background-color: var(--rc-white);
+    box-shadow: var(--rc-shadow);
+    padding: 1rem 0;
+}
+
+.navbar-recycle-chic .navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--rc-primary);
+}
+
+.navbar-recycle-chic .nav-link {
+    font-weight: 600;
+    color: var(--rc-dark);
+    margin: 0 0.5rem;
+}
+
+.navbar-recycle-chic .nav-link.active,
+.navbar-recycle-chic .nav-link:hover {
+    color: var(--rc-primary);
+}
+
+.footer-recycle-chic {
+    background-color: var(--rc-white);
+    color: var(--rc-dark);
+    text-align: center;
+    padding: 1.5rem 0;
+    margin-top: 2rem;
+    border-top: 1px solid var(--rc-border-color);
+}
+
+/* =================================================================
+   CARTES PRODUIT
+================================================================= */
+.product-card {
+    background-color: var(--rc-white);
+    border: 1px solid var(--rc-border-color);
+    border-radius: 10px;
+    box-shadow: var(--rc-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.product-card .card-img-top {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.product-card .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1.25rem;
+}
+
+.product-card .card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.product-card .card-category {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.product-card .card-price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--rc-primary);
+    margin-top: auto;
+    margin-bottom: 1rem;
+}
+
+.product-card .btn {
+    width: 100%;
+}
+
+/* =================================================================
+   PAGE CONTACT
+================================================================= */
+.contact-form .form-control {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+}
+
+.contact-map iframe {
+    border-radius: 10px;
+    box-shadow: var(--rc-shadow);
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+}
+
+/* =================================================================
+   LAYOUT ADMIN (admin.blade.php)
+================================================================= */
+body.admin-body {
+    display: flex;
+    min-height: 100vh;
+}
+
+.admin-sidebar {
+    width: 250px;
+    background-color: var(--rc-primary);
+    color: var(--rc-white);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100%;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+}
+
+.admin-brand {
+    font-family: var(--rc-font-title);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--rc-white);
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.admin-sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--rc-white);
+}
+
+.logout-form {
+    margin-top: auto;
+}
+
+.admin-content {
+    flex-grow: 1;
+    padding: 2rem;
+    margin-left: 250px; /* Espace pour la sidebar */
+    background-color: var(--rc-light);
+}
+
+.admin-content .card {
+    border-radius: 10px;
+    box-shadow: var(--rc-shadow);
+}
+
+/* =================================================================
+   RESPONSIVE
+================================================================= */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .admin-brand {
+        margin-bottom: 0;
+        margin-right: auto;
+    }
+
+    .admin-sidebar .nav {
+        flex-direction: row;
+    }
+
+    .logout-form {
+        margin-top: 0;
+        margin-left: 1rem;
+    }
+
+    body.admin-body {
+        flex-direction: column;
+    }
+
+    .admin-content {
+        margin-left: 0;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-recycle-chic .d-flex {
+        width: 100%;
+        margin-top: 1rem;
+    }
+}

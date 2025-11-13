@@ -3,20 +3,26 @@
 @section('title', 'Accueil')
 
 @section('content')
-    <h1 class="mb-4">Les derniers produits</h1>
-    <div class="row">
-        @foreach($produits as $produit)
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ Storage::url($produit->image) }}" class="card-img-top" alt="{{ $produit->titre }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $produit->titre }}</h5>
-                        <p class="card-text"><strong>{{ $produit->prix }} €</strong></p>
-                        <a href="{{ route('produit.detail', $produit->id) }}" class="btn btn-primary">Voir le produit</a>
+    <div class="container mt-5">
+        <h1 class="text-center mb-5">Nos derniers trésors</h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            @forelse($produits as $produit)
+                <div class="col">
+                    <div class="product-card">
+                        <img src="{{ $produit->image ? Storage::url($produit->image) : 'https://via.placeholder.com/300' }}" class="card-img-top" alt="{{ $produit->titre }}">
+                        <div class="card-body">
+                            <p class="card-category">{{ $produit->categorie->titre ?? 'Non classé' }}</p>
+                            <h5 class="card-title">{{ $produit->titre }}</h5>
+                            <p class="card-price">{{ $produit->prix }} €</p>
+                            <a href="{{ route('produit.detail', $produit->id) }}" class="btn btn-accent mt-auto">Voir le produit</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @empty
+                <div class="col-12">
+                    <p class="text-center">Aucun produit à afficher pour le moment.</p>
+                </div>
+            @endforelse
+        </div>
     </div>
 @endsection
-

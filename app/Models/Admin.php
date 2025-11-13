@@ -2,8 +2,7 @@
 
 namespace App\Models; 
 
-use Illuminate\Foundation\Auth\User as Authenticatable; // C'est ce qui permet l'authentification de l'utilisateur dans Laravel. 
-use Illuminate\Database\Eloquent\Model; // Importation de la classe Model pour interagir avec la base de données.
+use Illuminate\Foundation\Auth\User as Authenticatable; // Permet l'authentification de l'utilisateur dans Laravel.
 
 class Admin extends Authenticatable // La classe Admin hérite de Authenticatable pour gérer l'authentification des administrateurs.
 {
@@ -30,6 +29,3 @@ Admin::create([
     'password' => Hash::make('abc'),
 ]);
 */
-
-
-
