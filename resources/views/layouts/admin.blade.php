@@ -7,13 +7,14 @@
     <title>Admin - @yield('title', 'RecycleChic')</title>
 
     <!-- Fonts -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    @vite(['resources/css/recycle-chic.css'])
+    @vite(['resources/css/recycle-chic.css', 'resources/js/app.js'])
 </head>
 <body class="admin-body">
 

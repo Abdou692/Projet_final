@@ -1,52 +1,67 @@
 <?php
 
-// Définition du namespace pour le contrôleur d'authentification admin
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request; // Importation de la classe Request pour gérer les requêtes HTTP
-use Illuminate\Support\Facades\Auth; // Importation de la classe Auth pour l'authentification
-use App\Models\Admin; // Importation du modèle Admin
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
     /**
      * Affiche le formulaire de connexion pour l'administrateur.
+     *
+     * @return \Illuminate\View\View|\Illuminate\Http\RedirectResponse
      */
     public function showLoginForm()
     {
-        return view('admin.login'); // Retourne la vue de connexion admin
+        // Si l'admin est déjà connecté, on le redirige vers le tableau de bord.
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.categories.index');
+        }
+
+        // Assurez-vous que cette vue existe : resources/views/admin/auth/login.blade.php
+        return view('admin.auth.login');
     }
 
     /**
      * Gère la tentative de connexion de l'administrateur.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function login(Request $request)
     {
-        // Validation des entrées du formulaire
-        $request->validate([
-            'email' => 'required|email', // L'email doit être valide
-            'password' => 'required', // Le mot de passe est obligatoire
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        // Recherche de l'administrateur dans la base de données
-        $admin = Admin::where('email', $request->email)->first();
+        // C'est la ligne la plus importante : on spécifie le guard 'admin'.
+        if (Auth::guard('admin')->attempt($credentials)) {
+            $request->session()->regenerate();
 
-        // Vérification des informations d'identification et tentative de connexion
-        if ($admin && Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Connexion réussie, redirection vers le tableau de bord ou les catégories
-            return redirect()->route('admin.categories.index')->with('success', 'Connexion réussie.');
+            // Redirige vers la première page de l'admin après connexion.
+            return redirect()->intended(route('admin.categories.index'));
         }
 
-        // Si l'authentification échoue, renvoyer un message d'erreur
-        return back();
+        return back()->withErrors([
+            'email' => 'Les informations de connexion fournies ne correspondent pas à nos enregistrements.',
+        ])->onlyInput('email');
     }
 
     /**
-     * Déconnecte l'administrateur et le redirige vers la page de connexion.
+     * Déconnecte l'administrateur.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::guard('admin')->logout(); // Déconnexion de l'administrateur
-        return redirect()->route('admin.login')->with('success', 'Déconnexion réussie.');
+        Auth::guard('admin')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/'); // Redirige vers la page d'accueil du site public.
     }
 }

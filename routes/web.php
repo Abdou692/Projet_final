@@ -1,33 +1,47 @@
 <?php
 
+use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+// --- Routes Publiques ---
+// Remplacez ceci par vos contrôleurs publics
+Route::get('/', function () { return view('welcome'); })->name('accueil');
+Route::get('/contact', function() { return 'Page de contact'; })->name('contact.show');
+Route::get('/recherche', function() { return 'Page de recherche'; })->name('produit.recherche');
 
 
+// --- Routes pour l'administration ---
 
-use App\Http\Controllers\ProduitController;
-use App\Http\Controllers\CategorieController;
+Route::prefix('admin')->name('admin.')->group(function () {
 
-Route::get('/', [ProduitController::class, 'index'])->name('accueil');
-Route::get('produit/{id}', [ProduitController::class, 'show'])->name('produit.detail');
-Route::get('categorie/{id}', [CategorieController::class, 'show'])->name('categorie.show');
-Route::get('/recherche', [ProduitController::class, 'recherche'])->name('produit.recherche');
+    // Connexion de l'administrateur
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.submit');
 
-use App\Http\Controllers\ContactController;
+    // Routes protégées pour les admins connectés
+    Route::middleware('auth')->group(function() {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/contact', [ContactController::class, 'show'])->name('contact.show');
-Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+        // Dashboard
+        Route::get('/dashboard', function() { return view('admin.dashboard'); })->name('dashboard');
 
-use App\Http\Controllers\AdminAuthController;
+        // CRUD pour les Catégories
+        Route::resource('categories', CategoryController::class);
 
-// Route de connexion pour l'admin
-Route::get('admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-Route::post('admin/login', [AdminAuthController::class, 'login']);
-Route::post('admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
-use App\Http\Controllers\AdminCategorieController;
-use App\Http\Controllers\AdminProduitController;
-
-Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function() {
-    Route::resource('categories', AdminCategorieController::class);
-    Route::resource('produits', AdminProduitController::class);
+        // CRUD pour les Produits
+        Route::resource('products', ProductController::class);
+    });
 });

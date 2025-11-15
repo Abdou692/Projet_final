@@ -6,8 +6,8 @@
 
     <title>@yield('title', 'RecycleChic')</title>
 
-    <!-- Scripts et Styles avec Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Scripts et Styles avec Vite
+    @vite(['resources/css/app.css', 'resources/js/app.js']) -->
 
 </head>
 <body class="antialiased">
